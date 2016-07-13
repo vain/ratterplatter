@@ -177,6 +177,9 @@ disk_activity_level(void)
         }
     }
 
+    free(line);
+    fclose(fp);
+
     activity = 0;
     if (prev > 0)
     {
@@ -212,9 +215,6 @@ disk_activity_level(void)
             (activity > 1 ? 1 : activity) * 100, delta, max);
 
     prev = now;
-
-    free(line);
-    fclose(fp);
 
     return activity;
 }
