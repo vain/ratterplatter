@@ -1,0 +1,37 @@
+                             =============
+                             ratterplatter
+                             =============
+
+
+Don't you miss the feeling of a "real" computer? Isn't a modern PC with
+SSDs and without fans way too quiet? You should use ratterplatter!
+
+This program simulates the noise of my Pentium 133 from 1995, with focus
+on the hard disk. It uses actual recordings from that computer.
+
+
+Installation
+------------
+
+The following C libraries are required:
+
+    - libao
+
+ratterplatter expects to be run on Linux and needs /proc/diskstats.
+
+To build the program and install it to /usr/local:
+
+    $ make SAMPLE_DIR=/usr/local/share/ratterplatter/samples
+    # make install
+
+Note the usage of $SAMPLE_DIR. If this variable is unset, the program
+will look for samples relative to the current directory in "./samples/"
+(which is fine for testing purposes).
+
+
+Running
+-------
+
+Just run the program:
+
+    $ ratterplatter
