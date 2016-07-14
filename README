@@ -35,3 +35,10 @@ Running
 Just run the program:
 
     $ ratterplatter
+
+The program evaluates actual disk I/O, so you might want to drop your
+caches every now and then -- because on modern systems with many
+gigabytes of RAM, there's not *that* much real disk I/O going on
+anymore:
+
+    # echo 3 > /proc/sys/vm/drop_caches
