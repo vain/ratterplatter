@@ -6,8 +6,8 @@
 Don't you miss the feeling of a "real" computer? Isn't a modern PC with
 SSDs and without fans way too quiet? You should use ratterplatter!
 
-This program simulates the noise of my Pentium 133 from 1995, with focus
-on the hard disk. It uses actual recordings from that computer.
+This program emulates the noise of my Pentium 133 from the 1990ies, with
+focus on the hard disk. It uses actual recordings from that computer.
 
 
 Installation
@@ -42,3 +42,23 @@ gigabytes of RAM, there's not *that* much real disk I/O going on
 anymore:
 
     # echo 3 > /proc/sys/vm/drop_caches
+
+
+Background
+----------
+
+According to my personal records, the machine was most likely bought in
+1995 (I'm not 100% sure). It's an Intel Pentium with 133 MHz and 32 MB
+RAM, which was later upgraded to 64 MB. At first, it only had a generic
+VGA graphics card (which is now lost), and was later upgraded to an ATi
+3D Charger to allow for *some* basic 3D games. :-)
+
+The hard drive that you can hear in ratterplatter is a Seagate Medalist
+8641 with 8.6 GB. It was probably built in 1999 (according to the "Date
+Code"), so it was an upgrade that was added later.
+
+Here are some photos of the machine and the disk, including
+"openbsd57-startx.ogg" from which all the samples in ratterplatter were
+taken:
+
+https://dump.uninformativ.de/hashed/86697a1/
