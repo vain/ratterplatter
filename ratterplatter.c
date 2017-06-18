@@ -1,5 +1,6 @@
 #include <ao/ao.h>
 #include <dirent.h>
+#include <signal.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -22,6 +23,16 @@ struct Level
     struct Sample *samples;
     size_t num_samples;
 };
+
+bool run_main_loop = true;
+
+void
+exit_main_loop(int sig)
+{
+    (void)sig;
+
+    run_main_loop = false;
+}
 
 int
 filter_no_dots(const struct dirent *de)
@@ -83,7 +94,8 @@ load_sample(char *path, struct Sample *sample)
 }
 
 bool
-load_samples(struct Level *levels, size_t num_levels, struct Sample *bg)
+load_samples(struct Level *levels, size_t num_levels, struct Sample *bg,
+             struct Sample *poweron, struct Sample *poweroff)
 {
     size_t i;
     struct dirent **namelist;
@@ -98,6 +110,26 @@ load_samples(struct Level *levels, size_t num_levels, struct Sample *bg)
 
     fprintf(stderr, "[load] '%s'\n", path);
     if (!load_sample(path, bg))
+        return false;
+
+    if (snprintf(path, PATHSIZE, "%s/poweron.raw", SAMPLE_DIR) >= PATHSIZE)
+    {
+        fprintf(stderr, "Building path for sample dir (poweron) failed, truncated\n");
+        return false;
+    }
+
+    fprintf(stderr, "[load] '%s'\n", path);
+    if (!load_sample(path, poweron))
+        return false;
+
+    if (snprintf(path, PATHSIZE, "%s/poweroff.raw", SAMPLE_DIR) >= PATHSIZE)
+    {
+        fprintf(stderr, "Building path for sample dir (poweroff) failed, truncated\n");
+        return false;
+    }
+
+    fprintf(stderr, "[load] '%s'\n", path);
+    if (!load_sample(path, poweroff))
         return false;
 
     for (i = 0; i < num_levels; i++)
@@ -226,12 +258,13 @@ main()
     ao_device *device;
     ao_sample_format format = {0};
     struct Level levels[3] = {0};
-    struct Sample bg = {0};
+    struct Sample bg = {0}, poweron = {0}, poweroff = {0};
     uint32_t bg_at = 0, chunk, remaining;
     double activity;
     int level;
 
-    if (!load_samples(levels, sizeof levels / sizeof levels[0], &bg))
+    if (!load_samples(levels, sizeof levels / sizeof levels[0], &bg,
+                      &poweron, &poweroff))
     {
         fprintf(stderr, "Could not load samples, aborting\n");
         return 1;
@@ -252,7 +285,13 @@ main()
         return 1;
     }
 
-    for (;;)
+    signal(SIGHUP, exit_main_loop);
+    signal(SIGINT, exit_main_loop);
+
+    fprintf(stderr, "Booting system ...\n");
+    ao_play(device, poweron.bytes, poweron.num_bytes);
+
+    while (run_main_loop)
     {
         activity = disk_activity_level();
         if (activity < 0)
@@ -295,5 +334,8 @@ main()
         }
     }
 
-    /* unreached */
+    fprintf(stderr, "\nPowering down ...\n");
+    ao_play(device, poweroff.bytes, poweroff.num_bytes);
+
+    return 0;
 }
