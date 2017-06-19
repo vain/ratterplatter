@@ -108,7 +108,7 @@ load_samples(struct Level *levels, size_t num_levels, struct Sample *bg,
         return false;
     }
 
-    fprintf(stderr, "[load] '%s'\n", path);
+    printf("[load] '%s'\n", path);
     if (!load_sample(path, bg))
         return false;
 
@@ -118,7 +118,7 @@ load_samples(struct Level *levels, size_t num_levels, struct Sample *bg,
         return false;
     }
 
-    fprintf(stderr, "[load] '%s'\n", path);
+    printf("[load] '%s'\n", path);
     if (!load_sample(path, poweron))
         return false;
 
@@ -128,7 +128,7 @@ load_samples(struct Level *levels, size_t num_levels, struct Sample *bg,
         return false;
     }
 
-    fprintf(stderr, "[load] '%s'\n", path);
+    printf("[load] '%s'\n", path);
     if (!load_sample(path, poweroff))
         return false;
 
@@ -167,7 +167,7 @@ load_samples(struct Level *levels, size_t num_levels, struct Sample *bg,
             }
             free(namelist[j]);
 
-            fprintf(stderr, "[load] '%s'\n", path);
+            printf("[load] '%s'\n", path);
             if (!load_sample(path, &levels[i].samples[j]))
                 return false;
         }
@@ -243,8 +243,9 @@ disk_activity_level(void)
             activity = (double)delta / max;
     }
 
-    fprintf(stderr, "\033[K[activity] %.2f%%, delta %zu, max %zu\r",
-            (activity > 1 ? 1 : activity) * 100, delta, max);
+    printf("\033[K[activity] %.2f%%, delta %zu, max %zu\r",
+           (activity > 1 ? 1 : activity) * 100, delta, max);
+    fflush(stdout);
 
     prev = now;
 
@@ -288,7 +289,7 @@ main()
     signal(SIGHUP, exit_main_loop);
     signal(SIGINT, exit_main_loop);
 
-    fprintf(stderr, "Booting system ...\n");
+    printf("Booting system ...\n");
     ao_play(device, poweron.bytes, poweron.num_bytes);
 
     while (run_main_loop)
@@ -334,7 +335,7 @@ main()
         }
     }
 
-    fprintf(stderr, "\nPowering down ...\n");
+    printf("\nPowering down ...\n");
     ao_play(device, poweroff.bytes, poweroff.num_bytes);
 
     return 0;
