@@ -1,0 +1,13 @@
+Release history for ratterplatter
+
+next
+  [Changed]
+  - Re-recorded all samples in better quality (IMHO) and added more
+    samples.
+  - Play extra sounds on startup and shutdown.
+
+v16.11  2016-11-01
+  [Added]
+  - Monitor /proc/diskstats and play samples according to activity.
+
+  (This is a retroactive release, made on 2017-06-19.)
