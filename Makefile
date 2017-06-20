@@ -2,7 +2,7 @@ __NAME__ = ratterplatter
 
 CFLAGS += -Wall -Wextra -O2
 
-SAMPLE_DIR = ./samples
+SAMPLE_DIR = `readlink -e ./samples`
 CFLAGS += -DSAMPLE_DIR=\"$(SAMPLE_DIR)\"
 
 prefix = /usr/local

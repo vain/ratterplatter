@@ -26,7 +26,9 @@ To build the program and install it to /usr/local:
 
 Note the usage of $SAMPLE_DIR. If this variable is unset, the program
 will look for samples relative to the current directory in "./samples/"
-(which is fine for testing purposes).
+(which is fine for testing purposes). That path, however, will be
+canonicalized, so you don't have to change your $PWD before running
+ratterplatter.
 
 If you want to install systemd unit files as well, run:
 

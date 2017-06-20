@@ -5,6 +5,8 @@ next
   - Re-recorded all samples in better quality (IMHO) and added more
     samples.
   - Play extra sounds on startup and shutdown.
+  - Default SAMPLE_DIR will now be canonicalized using 'readlink -e' to
+    avoid having to change directories.
 
   [Added]
   - A systemd unit file.
