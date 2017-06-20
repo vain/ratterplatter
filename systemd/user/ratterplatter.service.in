@@ -1,0 +1,12 @@
+[Unit]
+Description=ratterplatter hard drive noise simulator
+Requires=pulseaudio.service
+After=pulseaudio.service
+
+[Service]
+ExecStart=__BINDIR__/ratterplatter
+KillSignal=SIGINT
+StandardOutput=null
+
+[Install]
+WantedBy=default.target

@@ -28,6 +28,14 @@ Note the usage of $SAMPLE_DIR. If this variable is unset, the program
 will look for samples relative to the current directory in "./samples/"
 (which is fine for testing purposes).
 
+If you want to install systemd unit files as well, run:
+
+    # make installsystemd
+
+This installs a user unit, so you must also enable it using "systemctl
+--user ratterplatter". It expects that you run PulseAudio in a user unit
+as well.
+
 
 Running
 -------

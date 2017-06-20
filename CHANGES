@@ -6,6 +6,9 @@ next
     samples.
   - Play extra sounds on startup and shutdown.
 
+  [Added]
+  - A systemd unit file.
+
 v16.11  2016-11-01
   [Added]
   - Monitor /proc/diskstats and play samples according to activity.
