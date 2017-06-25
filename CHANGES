@@ -7,6 +7,8 @@ next
   - Play extra sounds on startup and shutdown.
   - Default SAMPLE_DIR will now be canonicalized using 'readlink -e' to
     avoid having to change directories.
+  - Only errors will be printed to STDERR, everything else goes to
+    STDOUT. (Previously, all output was sent to STDERR.)
 
   [Added]
   - A systemd unit file.
